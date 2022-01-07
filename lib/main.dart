@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:demo/constants.dart';
 import 'package:demo/glass_container.dart';
 import 'package:flutter/cupertino.dart';
@@ -52,9 +53,37 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  bool isPlaying = false;
   bool isTempOn = false;
   bool isPlugOn = false;
+  bool isTVOn = false;
 
+  // final audios = <Audio>[
+  //   Audio(
+  //     'audio/song_one.mp3',
+  //     metas: Metas(
+  //       id: 'Rock',
+  //       title: 'Song One',
+  //       artist: 'Artist one',
+  //       album: 'One',
+  //       image: MetasImage.network(
+  //           'https://static.radio.fr/images/broadcasts/cb/ef/2075/c300.png'),
+  //     ),
+  //   ),
+  //   Audio(
+  //     'audio/song_two.mp3',
+  //     metas: Metas(
+  //       id: 'Metal',
+  //       title: 'Song Two',
+  //       artist: 'Artist Two',
+  //       album: 'Two',
+  //       image: MetasImage.network(
+  //           'https://image.shutterstock.com/image-vector/pop-music-text-art-colorful-600w-515538502.jpg'),
+  //     ),
+  //   ),
+  // ];
+
+  AssetsAudioPlayer player = AssetsAudioPlayer();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -336,7 +365,160 @@ class _HomePageState extends State<HomePage> {
                             end: 0.8,
                           ),
                         ],
-                      )
+                      ),
+                      SizedBox(height: 20.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          GlassContainer(
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 10.0, left: 10.0),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          height: 40.0,
+                                          width: 40.0,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                            image: DecorationImage(
+                                                image: AssetImage(
+                                                    "images/living_room.jpg"),
+                                                fit: BoxFit.cover),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Song_name",
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                              Text(
+                                                "Artist_name",
+                                                style: TextStyle(
+                                                  fontSize: 10,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      IconButton(
+                                        onPressed: () {},
+                                        icon: FaIcon(
+                                            FontAwesomeIcons.stepBackward,
+                                            color: Colors.white),
+                                      ),
+                                      IconButton(
+                                        onPressed: () {},
+                                        icon: FaIcon(FontAwesomeIcons.pause,
+                                            color: Colors.white),
+                                      ),
+                                      IconButton(
+                                        onPressed: () {},
+                                        icon: FaIcon(
+                                          FontAwesomeIcons.stepForward,
+                                          color: Colors.white,
+                                        ),
+                                        splashColor: kGrey,
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                              start: 0.3,
+                              end: 0.8),
+                          GlassContainer(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: isTVOn
+                                      ? Colors.white
+                                      : Colors.transparent,
+                                  border: Border.all(
+                                    color: Colors.white.withOpacity(0.2),
+                                  ),
+                                  borderRadius: BorderRadius.circular(18),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 10, right: 20, top: 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "Smart TV",
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              color: isTVOn
+                                                  ? Colors.black
+                                                  : Colors.white,
+                                            ),
+                                          ),
+                                          SizedBox(width: 30.0),
+                                          FaIcon(
+                                            FontAwesomeIcons.angleRight,
+                                            size: 14,
+                                            color: isTVOn
+                                                ? Colors.black
+                                                : Colors.white,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 10),
+                                      child: Text(
+                                        "Samsung UA55 4AC",
+                                        style: TextStyle(
+                                          fontSize: 10,
+                                          color: isTVOn
+                                              ? Colors.black
+                                              : Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                        left: 10,
+                                        top: 20,
+                                        bottom: 10,
+                                      ),
+                                      child: FlutterSwitch(
+                                          activeColor:
+                                              Color.fromRGBO(225, 155, 117, 1),
+                                          value: isTVOn,
+                                          onToggle: (value) {
+                                            setState(() {
+                                              isTVOn = value;
+                                            });
+                                          }),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              start: 0.3,
+                              end: 0.8)
+                        ],
+                      ),
                     ],
                   ),
                 ),
